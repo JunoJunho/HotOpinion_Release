@@ -9,6 +9,7 @@ __pycache__/
 
 # config_file
 config.py
+.ropeproject/
 
 # Distribution / packaging
 .Python
