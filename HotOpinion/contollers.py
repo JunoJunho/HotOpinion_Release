@@ -224,6 +224,15 @@ def login_process():
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
+@app.route('/logout_update', methods=['POST'])
+def logout_process():
+    print("Logout Process")
+    if request.method == 'POST':
+        session.clear()
+        print("Successfully Log out")
+        return json.dumps({'success': True}),200, {'ContentType': 'application/json'}
+
+
 @app.route('/init_setting', methods=['POST'])
 def init_setting():
     if 'is_superuser' in session:
