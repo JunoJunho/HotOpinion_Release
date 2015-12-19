@@ -199,7 +199,11 @@ def login_process():
     print("Login process is called")
     if request.method == 'POST':
         print("POST process is called")
+        if 'is_superuser' in session:
+            session.pop('is_superuser', None)
         if 'logged_in' in session and session['logged_in']:
+            print("Already Logon")
+            print(session['user_email'])
             return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
         json_data = request.get_json(force=True)
         user_email = json_data['user_email']
@@ -221,6 +225,7 @@ def login_process():
         else:
             print("Not super user")
             session['is_superuser'] = False
+        print("Return Login_Process")
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
