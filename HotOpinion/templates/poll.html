@@ -417,6 +417,19 @@
         function errorHandler(error){
             console.log(error);
             $("#errorModal").modal('show');
+		}
+
+        function logout_handler(){
+            $.ajax({
+                    url: '/logout_update',
+                    type: 'POST',
+                    success: function(response){
+                        console.log("Logout successfuly on server");
+                    },
+                    error: errorHandler,
+                    dataType: "json",
+                    contentType: "application/json"
+           });
         }
     </script>
 
