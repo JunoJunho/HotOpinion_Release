@@ -118,6 +118,7 @@
             var poll_id = json_data.objects[i].id;
             var title = json_data.objects[i].subject;
             var description = json_data.objects[i].question_statement;
+            description = decodeHtml(description);
             var div_item = make_poll_collapse(poll_id, title, description);
             make_poll_answers(poll_id, json_data.objects[i].questions, div_item);
             $("#accordion").append(div_item);

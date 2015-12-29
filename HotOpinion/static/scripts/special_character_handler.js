@@ -14,3 +14,9 @@ function replaceTag(tag) {
 function safe_tags_replace(str) {
     return str.replace(/[&<>\"\'\{\}]/g, replaceTag);
 }
+
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
