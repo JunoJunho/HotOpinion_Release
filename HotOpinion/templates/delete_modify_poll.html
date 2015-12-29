@@ -45,7 +45,7 @@
                 <div class="panel-heading" role="tab" id={{ "heading_poll" + poll.id|string() }}>
                     <h4 class="panel-title">
                         <a class="collapsed" id={{ "panel_poll_title_" + poll.id|string() }} role="button" data-toggle="collapse" data-parent="#accordion" href= {{ "#collapse_poll" + poll.id|string() }} aria-expanded="false" aria-controls={{ "collapse_poll" + poll.id|string() }}>
-                            {{ poll.subject }}
+                            {{ poll.subject|safe}}
                         </a>
                         <span class="glyphicon glyphicon-remove" aria-hidden="true" style="float:right;cursor: pointer" onclick="return delete_poll({{ poll.id|string() }})" ></span>
                         <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true" style="float:right;margin-right: 2px;cursor: pointer" onclick="return modify_poll_name({{ poll.id|string() }})"></span>
@@ -53,7 +53,7 @@
                 </div>
                 <div id= {{ "collapse_poll" + poll.id|string() }} class="panel-collapse collapse" role="tabpanel" aria-labelledby={{ "heading_poll" + poll.id|string() }}>
                     <div class="panel-body" id={{ "panel_body_poll_" + poll.id|string() }}>
-                        {{ poll.question_statement }}
+                        {{ poll.question_statement|safe}}
                     </div>
                     <ul class="list-group">
                         {% for answer in poll.questions %}
