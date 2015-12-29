@@ -59,6 +59,7 @@
     <br />
     <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="false">
         {% for poll in paginate.items %}
+            {% autoescape false %}
             <div class="panel panel-default" id="collapse_top_div">
                 <div class="panel-heading" role="tab" id={{ "heading_poll" + poll.id|string() }}>
                     <h4 class="panel-title">
@@ -87,6 +88,7 @@
                     <input class="btn btn-default btn-sm more-comment blue" type="button" style="display: none" value="Load More" onclick="return load_more_comment({{ poll.id }})" id={{ "btn_load_more_comment_" + poll.id|string() }} />
                 </div>
             </div>
+            {% endautoescape %}
         {% endfor %}
     </div>
 
@@ -217,11 +219,13 @@
             for( var i = 0; i<num_of_results; i++){
                 var str_date = json_data.objects[i].comment_time;
                 var poll_id = json_data.objects[i].poll_id;
+                var comment_content = json_data.objects[i].comment_content;
+                comment_content = decodeHtml(comment_content);
                 str_date = str_date.replace(/-/g,'\.');
                 str_date = str_date.replace('T', ' ');
                 str_date = str_date.replace(/:/g, '\.');
                 console.log(json_data);
-                $("#comment_ul"+poll_id).append("<li class=\"list-group-item\">"+ json_data.objects[i].comment_content + " " + str_date + " / " + json_data.objects[i].user_name + "</li>");
+                $("#comment_ul"+poll_id).append("<li class=\"list-group-item\">"+ comment_content + " " + str_date + " / " + json_data.objects[i].user_name + "</li>");
                 // Add User name information here
                 if(json_data.num_results > comment_per_pagination){ $("#btn_load_more_comment_"+json_data.objects[i].poll_id.toString()).css("display","block");}
             }
@@ -246,6 +250,7 @@
                 var poll_id = json_data.objects[i].id;
                 var title = json_data.objects[i].subject;
                 var description = json_data.objects[i].question_statement;
+                description = decodeHtml(description);
                 var div_item = make_poll_collapse(poll_id, title, description);
                 var total_participants = json_data.objects[i].total_participant;
                 make_poll_answers(poll_id, json_data.objects[i].questions, div_item, total_participants);
