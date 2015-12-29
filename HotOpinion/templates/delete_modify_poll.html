@@ -41,6 +41,7 @@
 
     <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="false">
         {% for poll in paginate.items %}
+            {% autoescape false %}
             <div class="panel panel-default" id="collapse_top_div">
                 <div class="panel-heading" role="tab" id={{ "heading_poll" + poll.id|string() }}>
                     <h4 class="panel-title">
@@ -62,6 +63,7 @@
                     </ul>
                 </div>
             </div>
+            {% endautoescapde %}
         {% endfor %}
     </div>
 
