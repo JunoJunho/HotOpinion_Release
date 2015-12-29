@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, jsonify, redirect, url_for, session
 from HotOpinion import app
 from database import db
-from models import User, Poll, Question, Comment
+from models import User, Poll, Question, Comment, respondents_identifier
 from datetime import timedelta
 import json
 
@@ -11,7 +11,7 @@ import json
 @app.before_request
 def make_session_timeout():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=5)
+    app.permanent_session_lifetime = timedelta(minutes=30)
 
 
 @app.route('/')
@@ -185,7 +185,10 @@ def delete_poll():
             # 2. Question delete
             Question.query.filter_by(poll_id=poll_id).delete()
             Question.query.session.commit()
-            # 3. Poll delete
+            # 3. respondents_identifier delete
+            respondents_identifier.query.filter_by(poll_id=poll_id).delete()
+            respondents_identifier.query.session.commit()
+            # 4. Poll delete
             Poll.query.filter_by(id=poll_id).delete()
             Poll.query.session.commit()
         except:
@@ -219,7 +222,7 @@ def login_process():
         session['user_name'] = user_name
         session['user_email'] = user_email
         session['logged_in'] = True
-        if u.name_string == app.config['SUPER_USER_EMAIL']:
+        if u.name_string in app.config['SUPER_USER_EMAIL']:
             print("Super user")
             session['is_superuser'] = True
         else:
