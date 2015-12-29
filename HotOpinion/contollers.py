@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, jsonify, redirect, url_for, session
 from HotOpinion import app
 from database import db
-from models import User, Poll, Question, Comment
+from models import User, Poll, Question, Comment, respondents_identifier
 from datetime import timedelta
 import json
 
@@ -185,7 +185,10 @@ def delete_poll():
             # 2. Question delete
             Question.query.filter_by(poll_id=poll_id).delete()
             Question.query.session.commit()
-            # 3. Poll delete
+            # 3. respondents_identifier delete
+            respondents_identifier.query.filter_by(poll_id=poll_id).delete()
+            respondents_identifier.query.session.commit()
+            # 4. Poll delete
             Poll.query.filter_by(id=poll_id).delete()
             Poll.query.session.commit()
         except:
