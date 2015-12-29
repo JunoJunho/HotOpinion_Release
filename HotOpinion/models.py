@@ -51,7 +51,7 @@ class Question(db.Model):
     __tablename__ = 'question'
     id = db.Column(db.Integer, primary_key=True)
     choice_num = db.Column(db.Integer)
-    answer_description = db.Column(db.String(50))
+    answer_description = db.Column(db.String(80))
     poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
     selected_num = db.Column(db.Integer)  # 선택된 수
 
