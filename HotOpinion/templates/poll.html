@@ -74,7 +74,7 @@
                     </div>
                     <ul class="list-group answer" id="answer_ul">
                         {% for answer in poll.questions %}
-                            <a href="#" value={{ answer.selected_num }} class="list-group-item" onclick="return vote_poll_handler({{ poll.id }},{{ answer.id }})">{{ answer.choice_num }}. {{ answer.answer_description }} ({{ answer.selected_num }}/{{ poll.total_participant }})</a>
+                            <a href="#" value={{ answer.selected_num }} class="list-group-item" onclick="return vote_poll_handler({{ poll.id }},{{ answer.id }})">{{ answer.choice_num }}. {{ answer.answer_description }} <b>({{ answer.selected_num }}/{{ poll.total_participant }})</b></a>
                         {% endfor %}
                     </ul>
 
@@ -320,7 +320,7 @@
             var answer_div = $("div.panel-collapse.in");
             answer_div.find(".list-group.answer a.list-group-item").remove();
             for (var i=0; i<answer_list.length; i++){
-                var li_str = "<a href=\"#\" class=\"list-group-item\" onclick=\"return vote_poll_handler(" + poll_id +"," + answer_list[i].id +")\">" + (i+1).toString() + ". " + answer_list[i].answer_description + " (" + answer_list[i].selected_num + "/" + total_participant +")" + "</a>";
+                var li_str = "<a href=\"#\" class=\"list-group-item\" onclick=\"return vote_poll_handler(" + poll_id +"," + answer_list[i].id +")\">" + (i+1).toString() + ". " + answer_list[i].answer_description + " <b>(" + answer_list[i].selected_num + "/" + total_participant +")</b>" + "</a>";
                 answer_div.find(".list-group.answer").append(li_str);
             }
         }
