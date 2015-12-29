@@ -137,10 +137,11 @@
                             session_logged_in = {{ session.logged_in }};
                         {% endif %}
                         if(!session_logged_in){
-                            FB.logout(function(response){});
+                            FB.logout(function(response){logout_handler(); location.reload();});
                         }
                     }
                 });
+				FB.Event.subscribe("auth.logout", function(){logout_handler(); location.reload();});
             };
 
             (function(d, s, id) {

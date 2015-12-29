@@ -9,11 +9,13 @@ __pycache__/
 
 # config_file
 config.py
+runserver.py
 .ropeproject/
 
 # Distribution / packaging
 .Python
 env/
+venv/
 build/
 develop-eggs/
 dist/
