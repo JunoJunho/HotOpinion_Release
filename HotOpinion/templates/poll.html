@@ -123,9 +123,14 @@
                 load_more_poll(curr_page);
             });
 
-            // Input legnth check
+            // Input length check
             $("input.form-control").keypress(function(){
-                alert($(this).val().length);
+                var current_len = $(this).val().length + 1;
+                var current_str = $(this).val();
+                if(current_len >= 200){
+                    alert("댓글은 최대 200자 까지 작성 가능합니다.");
+                    $(this).val(current_str.substring(0,200));
+                }
             });
 
             window.fbAsyncInit = function() {
