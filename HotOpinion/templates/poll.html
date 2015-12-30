@@ -123,6 +123,11 @@
                 load_more_poll(curr_page);
             });
 
+            // Input legnth check
+            $("input.form-control").keypress(function(){
+                alert($(this).val().length());
+            });
+
             window.fbAsyncInit = function() {
                 FB.init({
                     appId      : '872475326201689',
