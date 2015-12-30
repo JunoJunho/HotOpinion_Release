@@ -31,7 +31,7 @@ class Poll(db.Model):
     __tablename__ = 'poll'
     id = db.Column(db.Integer, primary_key=True)
     subject = db.Column(db.String(50))
-    question_statement = db.Column(db.String(100))
+    question_statement = db.Column(db.Text, nullable=False)
     num_questions = db.Column(db.Integer)  # 응답지 개수
     total_participant = db.Column(db.Integer)  # 총 참여자 수
     questions = db.relationship('Question', backref='Poll')
@@ -51,7 +51,7 @@ class Question(db.Model):
     __tablename__ = 'question'
     id = db.Column(db.Integer, primary_key=True)
     choice_num = db.Column(db.Integer)
-    answer_description = db.Column(db.String(80))
+    answer_description = db.Column(db.Text, nullable=False)
     poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'))
     selected_num = db.Column(db.Integer)  # 선택된 수
 
