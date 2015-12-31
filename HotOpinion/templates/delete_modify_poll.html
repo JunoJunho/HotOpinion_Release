@@ -58,7 +58,7 @@
                     </div>
                     <ul class="list-group">
                         {% for answer in poll.questions %}
-                                <a href="#" class="list-group-item" id={{ "panel_answer_poll_" + answer.choice_num }} onclick="">{{ answer.choice_num }}. {{ answer.answer_description }}</a>
+                                <a href="#" class="list-group-item" id={{ "panel_answer_poll_" + answer.choice_num|string() }} onclick="">{{ answer.choice_num }}. {{ answer.answer_description }}</a>
                         {% endfor %}
                     </ul>
                 </div>
