@@ -219,7 +219,7 @@
         var modified_description = $("#modal_poll_description").val();
         modified_description = safe_tags_replace(modified_description);
         var modified_answers = [];
-        for(var i=1; i<=curr_num_of_questions; i++){
+//        for(var i=1; i<=curr_num_of_questions; i++){
 //            var _modified_answer_contents = $("#panel_answer_poll_"+i).val();
 //            modified_answers.push(_modified_answer_contents);
  //       }
@@ -245,7 +245,7 @@
 
     function errorHandler(error){
             console.log(error);
-            $("#errorModal").modal('show');
+            $("#myModal").modal('show');
     }
 
 </script>
