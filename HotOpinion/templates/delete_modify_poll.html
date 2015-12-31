@@ -199,6 +199,10 @@
             success: function(json_data){
                 var poll = json_data.objects[0];
                 curr_num_of_questions = poll.num_questions;
+                for(var i=1; i<=curr_num_of_questions; i++){
+                   var question_contents = $("#panel_answer_poll_"+poll_id+"_"+i).text();
+                    $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
+                }
             },
             error: errorHandler,
             dataType: "json",
@@ -209,10 +213,6 @@
 {#        contents = safe_tags_replace(contents);#}
         var description = $("#panel_body_poll_" + poll_id).text();
 {#        description = safe_tags_replace(description);#}
-        for(var i=1; i<=curr_num_of_questions; i++){
-            var question_contents = $("#panel_answer_poll_"+poll_id+"_"+i).text();
-            $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
-        }
         $("#modify_poll").find("#modal_poll_contents").val(contents.trim());
         $("#modify_poll").find("#modal_poll_description").val(description.trim());
         $("#modify_poll").val(poll_id);
