@@ -224,13 +224,13 @@
         var poll_id = $("#modify_poll").val();
         $("#modify_poll").modal('hide');
         $("#modify_poll").val("");
-        var modified_contents = $("#modal_poll_contents").text();
+        var modified_contents = $("#modal_poll_contents").val();
         modified_contents = safe_tags_replace(modified_contents);
-        var modified_description = $("#modal_poll_description").text();
+        var modified_description = $("#modal_poll_description").val();
         modified_description = safe_tags_replace(modified_description);
         var modified_answers = [];
         for(var i=1; i<=curr_num_of_questions; i++){
-            var _modified_answer_contents = $("#panel_answer_poll_"+poll_id+"_"+i).val();
+            var _modified_answer_contents = $("#modal_poll_answer"+"_"+i).val();
             modified_answers.push(_modified_answer_contents);
         }
         $.ajax({
