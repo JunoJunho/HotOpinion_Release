@@ -31,6 +31,16 @@
                 <input name= "modal_poll_contents" type="text" class="form-control" id="modal_poll_contents" style="margin-bottom: 2px">
                 <label for="modal_poll_description">설문 내용</label>
                 <textarea name="modal_poll_description" class="form-control" id="modal_poll_description" rows="3"></textarea>
+                <label for="modal_poll_answer1">1</label>
+                <input type="text" class="form-control" id="modal_poll_answer1" style="margin-bottom: 2px">
+                <label for="modal_poll_answer2">2</label>
+                <input type="text" class="form-control" id="modal_poll_answer2" style="margin-bottom: 2px">
+                <label for="modal_poll_answer3">3</label>
+                <input type="text" class="form-control" id="modal_poll_answer3" style="margin-bottom: 2px">
+                <label for="modal_poll_answer4">4</label>
+                <input type="text" class="form-control" id="modal_poll_answer4" style="margin-bottom: 2px">
+                <label for="modal_poll_answer5">5</label>
+                <input type="text" class="form-control" id="modal_poll_answer5" style="margin-bottom: 2px">
             </div>
             <div class="modal-footer modal-sm">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -181,7 +191,7 @@
 
     function modify_poll_name(poll_id){
         // Get the number of question number from server
-        /*curr_num_of_questions = 2;
+        curr_num_of_questions = 2;
         var filters=[{"name": "id", "op": "eq", "val": poll_id*1}];
         $.ajax({
             url: '/api/poll',
@@ -194,15 +204,15 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8"
         });
-*/
+
         var contents = $("#panel_poll_title_" + poll_id).text();
         contents = safe_tags_replace(contents);
         var description = $("#panel_body_poll_" + poll_id).text();
         description = safe_tags_replace(description);
-  //      for(var i=1; i<=curr_num_of_questions; i++){
-  //          var question_contents = $("#panel_answer_poll_"+i).text();
-   //         $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
-   //     }
+        for(var i=1; i<=curr_num_of_questions; i++){
+            var question_contents = $("#panel_answer_poll_"+i).text();
+            $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
+        }
         $("#modify_poll").find("#modal_poll_contents").val(contents.trim());
         $("#modify_poll").find("#modal_poll_description").val(description.trim());
         $("#modify_poll").val(poll_id);
@@ -219,10 +229,10 @@
         var modified_description = $("#modal_poll_description").val();
         modified_description = safe_tags_replace(modified_description);
         var modified_answers = [];
-//        for(var i=1; i<=curr_num_of_questions; i++){
-//            var _modified_answer_contents = $("#panel_answer_poll_"+i).val();
-//            modified_answers.push(_modified_answer_contents);
- //       }
+        for(var i=1; i<=curr_num_of_questions; i++){
+            var _modified_answer_contents = $("#panel_answer_poll_"+i).val();
+            modified_answers.push(_modified_answer_contents);
+        }
         $.ajax({
                 url: '/modify_poll',
                 type: 'POST',
