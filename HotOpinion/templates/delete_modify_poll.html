@@ -31,15 +31,10 @@
                 <input name= "modal_poll_contents" type="text" class="form-control" id="modal_poll_contents" style="margin-bottom: 2px">
                 <label for="modal_poll_description">설문 내용</label>
                 <textarea name="modal_poll_description" class="form-control" id="modal_poll_description" rows="3"></textarea>
-                <label for="modal_poll_answer1">1</label>
                 <input type="text" class="form-control" id="modal_poll_answer1" style="margin-bottom: 2px">
-                <label for="modal_poll_answer2">2</label>
                 <input type="text" class="form-control" id="modal_poll_answer2" style="margin-bottom: 2px">
-                <label for="modal_poll_answer3">3</label>
                 <input type="text" class="form-control" id="modal_poll_answer3" style="margin-bottom: 2px">
-                <label for="modal_poll_answer4">4</label>
                 <input type="text" class="form-control" id="modal_poll_answer4" style="margin-bottom: 2px">
-                <label for="modal_poll_answer5">5</label>
                 <input type="text" class="form-control" id="modal_poll_answer5" style="margin-bottom: 2px">
             </div>
             <div class="modal-footer modal-sm">
@@ -203,6 +198,11 @@
                     var question_contents = $("#panel_answer_poll_"+poll_id+"_"+i).text();
                     question_contents = question_contents.substring(3, question_contents.length);
                     $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
+                }
+                if(curr_num_of_questions < 5){
+                    for(var i=5; i>5-curr_num_of_questions; i--){
+                        $("#modify_poll").find("#modal_poll_answer"+i).toggle();
+                    }
                 }
                 $("#modify_poll").modal('show');
             },
