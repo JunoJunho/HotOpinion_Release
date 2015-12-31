@@ -198,10 +198,11 @@
                     var question_contents = $("#panel_answer_poll_"+poll_id+"_"+i).text();
                     question_contents = question_contents.substring(3, question_contents.length);
                     $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
+                    $("#modify_poll").find("#modal_poll_answer"+i).css("display","block");
                 }
                 if(curr_num_of_questions < 5){
                     for(var i=5; i>5-curr_num_of_questions; i--){
-                        $("#modify_poll").find("#modal_poll_answer"+i).toggle();
+                        $("#modify_poll").find("#modal_poll_answer"+i).css("display","none");
                     }
                 }
                 $("#modify_poll").modal('show');
