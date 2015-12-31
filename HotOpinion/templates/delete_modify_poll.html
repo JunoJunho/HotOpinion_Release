@@ -240,7 +240,8 @@
                     poll_id : poll_id,
                     modified_title: modified_contents,
                     modified_description: modified_description,
-                    modified_answers: JSON.stringify(modified_answers)
+{#                    modified_answers: JSON.stringify(modified_answers)#}
+                    modified_answers: modified_answers
                 },
                 success: function(){
                     location.reload();
