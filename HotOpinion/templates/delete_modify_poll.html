@@ -201,6 +201,7 @@
                 curr_num_of_questions = poll.num_questions;
                 for(var i=1; i<=curr_num_of_questions; i++){
                     var question_contents = $("#panel_answer_poll_"+poll_id+"_"+i).text();
+                    question_contents = question_contents.substring(3, question_contents.length);
                     $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
                 }
                 $("#modify_poll").modal('show');
