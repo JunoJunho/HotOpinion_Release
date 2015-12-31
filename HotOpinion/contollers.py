@@ -163,6 +163,7 @@ def modify_poll_title():
         modified_title = request.form['modified_title']
         modified_description = request.form['modified_description']
         modified_answers = request.form['modified_answers']
+        print modified_answers
         poll_id = int(poll_id)
         p = Poll.query.get(poll_id)
         p.subject = modified_title
