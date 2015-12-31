@@ -162,10 +162,17 @@ def modify_poll_title():
         poll_id = request.form['poll_id']
         modified_title = request.form['modified_title']
         modified_description = request.form['modified_description']
+        modified_answers = request.form['modified_answers']
         poll_id = int(poll_id)
         p = Poll.query.get(poll_id)
         p.subject = modified_title
         p.question_statement = modified_description
+        answer_list = p.questions
+        for i in range(0, p.num_questions):
+            q = answer_list[i]
+            q.answer_description = modified_answers[i]
+            db.session.merge(q)
+            db.session.commit()
         db.session.merge(p)
         db.session.commit()
 
