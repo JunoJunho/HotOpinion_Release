@@ -68,7 +68,7 @@
                     </div>
                     <ul class="list-group">
                         {% for answer in poll.questions %}
-                                <a href="#" class="list-group-item" id={{ "panel_answer_poll_" + answer.choice_num|string() }} onclick="">{{ answer.choice_num }}. {{ answer.answer_description }}</a>
+                                <a href="#" class="list-group-item" id={{ "panel_answer_poll_" + poll.id|string() +"_"+ answer.choice_num|string() }} onclick="">{{ answer.choice_num }}. {{ answer.answer_description }}</a>
                         {% endfor %}
                     </ul>
                 </div>
@@ -206,11 +206,11 @@
         });
 
         var contents = $("#panel_poll_title_" + poll_id).text();
-        contents = safe_tags_replace(contents);
+{#        contents = safe_tags_replace(contents);#}
         var description = $("#panel_body_poll_" + poll_id).text();
-        description = safe_tags_replace(description);
+{#        description = safe_tags_replace(description);#}
         for(var i=1; i<=curr_num_of_questions; i++){
-            var question_contents = $("#panel_answer_poll_"+i).text();
+            var question_contents = $("#panel_answer_poll_"+poll_id+"_"+i).text();
             $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
         }
         $("#modify_poll").find("#modal_poll_contents").val(contents.trim());
@@ -224,13 +224,13 @@
         var poll_id = $("#modify_poll").val();
         $("#modify_poll").modal('hide');
         $("#modify_poll").val("");
-        var modified_contents = $("#modal_poll_contents").val();
+        var modified_contents = $("#modal_poll_contents").text();
         modified_contents = safe_tags_replace(modified_contents);
-        var modified_description = $("#modal_poll_description").val();
+        var modified_description = $("#modal_poll_description").text();
         modified_description = safe_tags_replace(modified_description);
         var modified_answers = [];
         for(var i=1; i<=curr_num_of_questions; i++){
-            var _modified_answer_contents = $("#panel_answer_poll_"+i).val();
+            var _modified_answer_contents = $("#panel_answer_poll_"+poll_id+"_"+i).val();
             modified_answers.push(_modified_answer_contents);
         }
         $.ajax({
