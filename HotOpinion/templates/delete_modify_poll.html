@@ -31,6 +31,17 @@
                 <input name= "modal_poll_contents" type="text" class="form-control" id="modal_poll_contents" style="margin-bottom: 2px">
                 <label for="modal_poll_description">설문 내용</label>
                 <textarea name="modal_poll_description" class="form-control" id="modal_poll_description" rows="3"></textarea>
+                <label for="modal_poll_questions">설문 답변</label>
+                <label for="modal_poll_answer1">1</label>
+                <input type="text" class="form-control" id="modal_poll_answer1" style="margin-bottom: 2px">
+                <label for="modal_poll_answer2">2</label>
+                <input type="text" class="form-control" id="modal_poll_answer2" style="margin-bottom: 2px">
+                <label for="modal_poll_answer3">3</label>
+                <input type="text" class="form-control" id="modal_poll_answer3" style="margin-bottom: 2px">
+                <label for="modal_poll_answer4">4</label>
+                <input type="text" class="form-control" id="modal_poll_answer4" style="margin-bottom: 2px">
+                <label for="modal_poll_answer5">5</label>
+                <input type="text" class="form-control" id="modal_poll_answer5" style="margin-bottom: 2px">
             </div>
             <div class="modal-footer modal-sm">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -58,7 +69,7 @@
                     </div>
                     <ul class="list-group">
                         {% for answer in poll.questions %}
-                                <a href="#" class="list-group-item" onclick="">{{ answer.choice_num }}. {{ answer.answer_description }}</a>
+                                <a href="#" class="list-group-item" id={{ "panel_answer_poll_" + answer.choice_num }} onclick="">{{ answer.choice_num }}. {{ answer.answer_description }}</a>
                         {% endfor %}
                     </ul>
                 </div>
@@ -75,6 +86,7 @@
     var curr_page = 1;
     var total_page = {{ paginate.pages }};
     var page_per_pagination = {{ num_of_pages_per_pagination }};
+    var curr_num_of_questions = -1;
     $(document).ready(function () {
         var csrftoken = $('meta[name=csrf-token]').attr('content');
 
@@ -179,10 +191,29 @@
     }
 
     function modify_poll_name(poll_id){
+        // Get the number of question number from server
+        curr_num_of_questions = 2;
+        var filters=[{"name": "id", "op": "eq", "val": poll_id*1}];
+        $.ajax({
+            url: '/api/poll',
+            data: {"q" : JSON.stringify({"filters": filters})},
+            success: function(json_data){
+                var poll = json_data.objects[0];
+                curr_num_of_questions = poll.num_questions;
+            },
+            error: errorHandler,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8"
+        });
+
         var contents = $("#panel_poll_title_" + poll_id).text();
         contents = safe_tags_replace(contents);
         var description = $("#panel_body_poll_" + poll_id).text();
         description = safe_tags_replace(description);
+        for(var i=1; i<=curr_num_of_questions; i++){
+            var question_contents = $("#panel_answer_poll_"+i).text();
+            $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
+        }
         $("#modify_poll").find("#modal_poll_contents").val(contents.trim());
         $("#modify_poll").find("#modal_poll_description").val(description.trim());
         $("#modify_poll").val(poll_id);
@@ -190,6 +221,7 @@
     }
 
     function handle_modify_poll_name(){
+        if(curr_num_of_questions < 2) return;
         var poll_id = $("#modify_poll").val();
         $("#modify_poll").modal('hide');
         $("#modify_poll").val("");
@@ -197,13 +229,19 @@
         modified_contents = safe_tags_replace(modified_contents);
         var modified_description = $("#modal_poll_description").val();
         modified_description = safe_tags_replace(modified_description);
+        var modified_answers = [];
+        for(var i=1; i<=curr_num_of_questions; i++){
+            var _modified_answer_contents = $("#panel_answer_poll_"+i).val();
+            modified_answers.push(_modified_answer_contents);
+        }
         $.ajax({
                 url: '/modify_poll',
                 type: 'POST',
                 data: {
                     poll_id : poll_id,
                     modified_title: modified_contents,
-                    modified_description: modified_description
+                    modified_description: modified_description,
+                    modified_answers: modified_answers
                 },
                 success: function(){
                     location.reload();
@@ -215,5 +253,11 @@
         });
         console.log($("#modal_poll_contents").val());
     }
+
+    function errorHandler(error){
+            console.log(error);
+            $("#errorModal").modal('show');
+    }
+
 </script>
 {% endblock %}
