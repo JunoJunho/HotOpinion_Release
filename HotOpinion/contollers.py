@@ -162,8 +162,9 @@ def modify_poll_title():
         poll_id = request.form['poll_id']
         modified_title = request.form['modified_title']
         modified_description = request.form['modified_description']
-        print(modified_description)
-        modified_answers = request.form['modified_answers']
+        json_data = request.get_json(force=True)
+        print json_data
+        modified_answers = json_data['modified_answers']
         print modified_answers
         poll_id = int(poll_id)
         p = Poll.query.get(poll_id)
