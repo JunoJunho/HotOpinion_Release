@@ -192,7 +192,7 @@
 
     function modify_poll_name(poll_id){
         // Get the number of question number from server
-        curr_num_of_questions = 2;
+        /*curr_num_of_questions = 2;
         var filters=[{"name": "id", "op": "eq", "val": poll_id*1}];
         $.ajax({
             url: '/api/poll',
@@ -205,15 +205,15 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8"
         });
-
+*/
         var contents = $("#panel_poll_title_" + poll_id).text();
         contents = safe_tags_replace(contents);
         var description = $("#panel_body_poll_" + poll_id).text();
         description = safe_tags_replace(description);
-        for(var i=1; i<=curr_num_of_questions; i++){
-            var question_contents = $("#panel_answer_poll_"+i).text();
-            $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
-        }
+  //      for(var i=1; i<=curr_num_of_questions; i++){
+  //          var question_contents = $("#panel_answer_poll_"+i).text();
+   //         $("#modify_poll").find("#modal_poll_answer"+i).val(question_contents.trim());
+   //     }
         $("#modify_poll").find("#modal_poll_contents").val(contents.trim());
         $("#modify_poll").find("#modal_poll_description").val(description.trim());
         $("#modify_poll").val(poll_id);
@@ -231,9 +231,9 @@
         modified_description = safe_tags_replace(modified_description);
         var modified_answers = [];
         for(var i=1; i<=curr_num_of_questions; i++){
-            var _modified_answer_contents = $("#panel_answer_poll_"+i).val();
-            modified_answers.push(_modified_answer_contents);
-        }
+//            var _modified_answer_contents = $("#panel_answer_poll_"+i).val();
+//            modified_answers.push(_modified_answer_contents);
+ //       }
         $.ajax({
                 url: '/modify_poll',
                 type: 'POST',
