@@ -146,6 +146,7 @@ def modify_delete_poll():
                              per_page=app.config['POSTS_PER_PAGE'],
                              error_out=False
                              )
+    print("Return to page")
     return render_template('delete_modify_poll.html',
                            num_of_pages_per_pagination=app.config['POSTS_PER_PAGE'],
                            total=total,
