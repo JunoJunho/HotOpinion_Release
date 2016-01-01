@@ -146,9 +146,6 @@ def modify_delete_poll():
                              per_page=app.config['POSTS_PER_PAGE'],
                              error_out=False
                              )
-    print("Return to page")
-    print(total)
-    print(pn)
     return render_template('delete_modify_poll.html',
                            num_of_pages_per_pagination=app.config['POSTS_PER_PAGE'],
                            total=total,
@@ -205,7 +202,7 @@ def delete_poll():
             # print("Question delete")
             # 3. respondents_identifier delete
             p = Poll.query.filter_by(id=poll_id).first()
-            print p.User.len()
+            print p.User
             for each_user in p.User:
                 print each_user.name
                 each_user.attended_polls.remove(p)
