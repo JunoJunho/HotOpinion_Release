@@ -206,7 +206,7 @@ def delete_poll():
             # 3. respondents_identifier delete
             p = Poll.query.filter_by(id=poll_id).first()
             user_list = p.User
-            # print user_list
+            print user_list
             for each_user in user_list:
                 print each_user.attended_polls
                 each_user.attended_polls.remove(p)
