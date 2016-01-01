@@ -198,9 +198,11 @@ def delete_poll():
         try:
             Comment.query.filter_by(poll_id=poll_id).delete()
             Comment.query.session.commit()
+            print("Comment delete")
             # 2. Question delete
             Question.query.filter_by(poll_id=poll_id).delete()
             Question.query.session.commit()
+            print("Question delete")
             # 3. respondents_identifier delete
             p = Poll.query.filter_by(id=poll_id).first()
             user_list = p.User
