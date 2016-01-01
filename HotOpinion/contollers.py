@@ -186,10 +186,12 @@ def modify_poll_title():
 def delete_poll():
     if request.method == 'POST':
         if not session['is_superuser']:
+            print("DEBUG: is not super user")
             return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
         poll_id = request.form['poll_id']
         poll_id = int(poll_id)
         if Poll.query.filter_by(id=poll_id).first() is None:
+            print("DEBUG: poll does not exist")
             json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
         # 1. Comment delete
         try:
@@ -199,11 +201,14 @@ def delete_poll():
             Question.query.filter_by(poll_id=poll_id).delete()
             Question.query.session.commit()
             # 3. respondents_identifier delete
-            respondents_identifier.query.filter_by(poll_id=poll_id).delete()
-            respondents_identifier.query.session.commit()
+            p = Poll.query.filter_by(id=poll_id)
+            user_list = p.User
+            for each_user in user_list:
+                each_user.attended_polls.delete(p)
             # 4. Poll delete
             Poll.query.filter_by(id=poll_id).delete()
             Poll.query.session.commit()
+            db.session.commit()
         except:
             db.session.rollback()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
