@@ -205,7 +205,7 @@ def delete_poll():
             print p.User
             for each_user in p.User:
                 print each_user.name
-                each_user.attended_polls.remove(p)
+                #each_user.attended_polls.remove(p)
                 print "Removed"
             db.session.commit()
             print "Loop exit"
