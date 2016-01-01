@@ -169,12 +169,13 @@ def modify_poll_title():
         p = Poll.query.get(poll_id)
         p.subject = modified_title
         p.question_statement = modified_description
-        answer_list = p.questions
-        for i in range(0, p.num_questions):
-            q = answer_list[i]
-            q.answer_description = modified_answers[i]
-            db.session.merge(q)
-            db.session.commit()
+        if p.num_questions > 0:
+            answer_list = p.questions
+            for i in range(0, p.num_questions):
+                q = answer_list[i]
+                q.answer_description = modified_answers[i]
+                db.session.merge(q)
+                db.session.commit()
         db.session.merge(p)
         db.session.commit()
 
@@ -201,7 +202,7 @@ def delete_poll():
             Question.query.filter_by(poll_id=poll_id).delete()
             Question.query.session.commit()
             # 3. respondents_identifier delete
-            p = Poll.query.filter_by(id=poll_id)
+            p = Poll.query.filter_by(id=poll_id).first()
             user_list = p.User
             for each_user in user_list:
                 each_user.attended_polls.delete(p)
@@ -256,7 +257,7 @@ def logout_process():
     if request.method == 'POST':
         session.clear()
         print("Successfully Log out")
-        return json.dumps({'success': True}),200, {'ContentType': 'application/json'}
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/init_setting', methods=['POST'])

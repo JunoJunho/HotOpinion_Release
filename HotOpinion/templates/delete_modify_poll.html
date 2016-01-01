@@ -184,6 +184,17 @@
         });
     }
 
+    function validity_check(){
+        if(!$("#modal_poll_contents").val()) return false;
+        if(!$("#modal_poll_description").val()) return false;
+        for(var i=1; i<=curr_num_of_questions; i++){
+            if(!$("#modal_poll_answer"+i).val()){
+                return false;
+            }
+        }
+        return true;
+    }
+
     function modify_poll_name(poll_id){
         // Get the number of question number from server
         curr_num_of_questions = 2;
@@ -222,6 +233,10 @@
     }
 
     function handle_modify_poll_name(){
+        if(!validity_check()){
+            alert("양식을 채워주세요.");
+            return;
+        }
         if(curr_num_of_questions < 2) return;
         var poll_id = $("#modify_poll").val();
         $("#modify_poll").modal('hide');
