@@ -208,7 +208,9 @@ def delete_poll():
             user_list = p.User
             print user_list
             for each_user in user_list:
+                print each_user.attended_polls
                 each_user.attended_polls.delete(p)
+                db.session.commit()
             # 4. Poll delete
             Poll.query.filter_by(id=poll_id).delete()
             Poll.query.session.commit()
