@@ -237,7 +237,7 @@
                 str_date = str_date.replace('T', ' ');
                 str_date = str_date.replace(/:/g, '\.');
                 console.log(json_data);
-                $("#comment_ul"+poll_id).append("<li class=\"list-group-item\">"+ comment_content + " " + str_date + " / " + json_data.objects[i].user_name + "</li>");
+                $("#comment_ul"+poll_id).append("<li class=\"list-group-item\">"+ comment_content + " - " + str_date + " / " + json_data.objects[i].user_name + "</li>");
                 // Add User name information here
                 if(json_data.num_results > comment_per_pagination){ $("#btn_load_more_comment_"+json_data.objects[i].poll_id.toString()).css("display","block");}
             }
