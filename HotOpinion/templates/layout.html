@@ -16,6 +16,14 @@
 </head>
 
 <body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.5&appId=872475326201689";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
     <div id="errorModal" class="modal fade modal-sm" role="dialog">
         <div class="modal-dialog modal-sm">
             <!-- Modal content-->
@@ -66,7 +74,8 @@
         {% block content %}{% endblock %}
         <hr />
         <footer>
-            <p>&copy; HotOpinion <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState()"></div></p>
+            <p>&copy; HotOpinion <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState()"></div>
+            <div class="fb-share-button" data-href="http://hotopinion.net" data-layout="button_count"></div></p>
         </footer>
     </div>
     <script type="text/javascript">
