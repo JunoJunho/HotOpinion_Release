@@ -172,7 +172,6 @@ def modify_poll_title():
                 q = answer_list[i]
                 q.answer_description = modified_answers[i]
                 db.session.merge(q)
-                db.session.commit()
         db.session.merge(p)
         db.session.commit()
 
