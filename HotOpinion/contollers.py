@@ -177,9 +177,9 @@ def modify_poll_title():
                 q = Question.query.filter_by(id=p.questions[i].id).first()
                 q.answer_description = modified_answers[i]
                 print q.answer_description
-                db.session.add(q)
-                db.session.commit()
-        db.session.add(p)
+                # db.session.add(q)
+                # db.session.commit()
+        # db.session.add(p)
         db.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
