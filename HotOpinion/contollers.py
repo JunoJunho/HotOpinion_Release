@@ -178,11 +178,25 @@ def modify_poll_title():
                 q.answer_description = modified_answers[i]
                 print q.answer_description
                 db.session.merge(q)
-                # db.session.commit()
+                db.session.autoflush()
         db.session.merge(p)
         db.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
+
+
+@app.route('/modify_questions', methods=['POST'])
+def modify_questions():
+    if request.method == 'POST':
+        poll_id = request.form['poll_id']
+        modified_answers = request.form.getlist("modified_answers[]")
+        poll_id = int(poll_id)
+        questions = Question.query.filter_by(poll_id=poll_id).all()
+        for i in range(0, len(questions)):
+            questions[i].answer_description = modified_answers[i]
+            db.session.merge(questions[i])
+            db.session.commit()
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
 @app.route('/delete_poll', methods=['POST'])
