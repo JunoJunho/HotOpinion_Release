@@ -179,7 +179,7 @@ def modify_poll_title():
                 print q.answer_description
                 # db.session.add(q)
                 # db.session.commit()
-        # db.session.add(p)
+        db.session.add(p)
         db.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
