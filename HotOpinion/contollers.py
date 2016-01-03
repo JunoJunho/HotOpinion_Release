@@ -147,6 +147,7 @@ def modify_delete_poll():
     if 'is_superuser' not in session or not session['is_superuser']:
         return redirect(url_for(index))
     total = db.session.query(Poll).count()
+    db.session.close()
     pn = Poll.query.paginate(page=1,
                              per_page=app.config['POSTS_PER_PAGE'],
                              error_out=False
@@ -168,15 +169,17 @@ def modify_poll_title():
         modified_answers = request.form.getlist("modified_answers[]")
         # print modified_answers
         poll_id = int(poll_id)
-        p = Poll.query.get(poll_id)
+        p = Poll.query.filter_by(id=poll_id).first()
         p.subject = modified_title
         p.question_statement = modified_description
         if p.num_questions > 0:
             # answer_list = p.questions
             for i in range(0, p.num_questions):
                 p.questions[i].answer_description = modified_answers[i]
-        db.session.merge(p)
-        db.session.commit()
+                db.session.add(p)
+                db.session.commit()
+        # db.session.merge(p)
+
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 
