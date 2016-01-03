@@ -171,21 +171,10 @@ def modify_poll_title():
         p = Poll.query.get(poll_id)
         p.subject = modified_title
         p.question_statement = modified_description
-        db.session.merge(p)
-        # db.session.commit()
         if p.num_questions > 0:
-            answer_list = p.questions
+            # answer_list = p.questions
             for i in range(0, p.num_questions):
-                q = answer_list[i]
-                q.answer_description = modified_answers[i]
-                db.session.merge(q)
-                # db.session.commit()
-                # db.session.remove()
-                # Question.query.update(q)
-                # Question.query.session.commit()
-        # db.session.merge(p)
-        # Poll.query.update(p)
-        # Poll.query.session.commit()
+                p.questions[i].answer_description = modified_answers[i]
         db.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
