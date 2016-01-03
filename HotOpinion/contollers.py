@@ -171,7 +171,7 @@ def modify_poll_title():
         p = Poll.query.filter_by(id=poll_id).first()
         p.subject = modified_title
         p.question_statement = modified_description
-        if p.num_questions > 0:
+        if p.num_questions < 0:
             # answer_list = p.questions
             for i in range(0, p.num_questions):
                 q = Question.query.filter_by(id=p.questions[i].id).first()
