@@ -174,10 +174,10 @@ def modify_poll_title():
         if p.num_questions > 0:
             # answer_list = p.questions
             for i in range(0, p.num_questions):
-                p.questions[i].answer_description = modified_answers[i]
-                print p.questions[i].answer_description
-                # db.session.add(p)
-
+                q = Question.query.filter_by(id=p.questions[i].id)
+                q.answer_description = modified_answers[i]
+                print q.answer_description
+                db.session.add(q)
         db.session.add(p)
         db.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
