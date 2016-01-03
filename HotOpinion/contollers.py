@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, jsonify, redirect, url_for, session
 from HotOpinion import app
 from database import db
-from models import User, Poll, Question, Comment, respondents_identifier
+from models import User, Poll, Question, Comment
 from datetime import timedelta
 import json
 
@@ -12,6 +12,11 @@ import json
 def make_session_timeout():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=30)
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.session.remove()
 
 
 @app.route('/')
@@ -171,8 +176,14 @@ def modify_poll_title():
             for i in range(0, p.num_questions):
                 q = answer_list[i]
                 q.answer_description = modified_answers[i]
-                db.session.merge(q)
-        db.session.merge(p)
+                db.session.add(q)
+                db.session.commit()
+                # Question.query.update(q)
+                # Question.query.session.commit()
+        # db.session.merge(p)
+        # Poll.query.update(p)
+        # Poll.query.session.commit()
+        db.session.add(p)
         db.session.commit()
 
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
