@@ -166,7 +166,7 @@ def modify_poll_title():
         modified_description = request.form['modified_description']
         # modified_answers = json.dumps(request.form['modified_answers'])
         modified_answers = request.form.getlist("modified_answers[]")
-        print modified_answers
+        # print modified_answers
         poll_id = int(poll_id)
         p = Poll.query.get(poll_id)
         p.subject = modified_title
@@ -177,6 +177,8 @@ def modify_poll_title():
                 q = answer_list[i]
                 q.answer_description = modified_answers[i]
                 db.session.add(q)
+                db.session.commit()
+                db.session.remove()
                 # Question.query.update(q)
                 # Question.query.session.commit()
         # db.session.merge(p)
@@ -184,7 +186,6 @@ def modify_poll_title():
         # Poll.query.session.commit()
         db.session.add(p)
         db.session.commit()
-
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
 
