@@ -141,10 +141,6 @@
                     xfbml      : true,
                     version    : 'v2.5'
                 });
-                FB.ui({
-                  method: 'share',
-                  href: 'https://developers.facebook.com/docs/'
-                }, function(response){});
                 var session_logged_in = false;
                 FB.getLoginStatus(function(response){
                     if (response.status != 'connected') { // Not log in in the facebook
