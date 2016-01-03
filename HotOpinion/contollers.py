@@ -165,20 +165,20 @@ def modify_poll_title():
         poll_id = request.form['poll_id']
         modified_title = request.form['modified_title']
         modified_description = request.form['modified_description']
-        modified_answers = request.form.getlist("modified_answers[]")
+        # modified_answers = request.form.getlist("modified_answers[]")
         # print modified_answers
         poll_id = int(poll_id)
         p = Poll.query.filter_by(id=poll_id).first()
         p.subject = modified_title
         p.question_statement = modified_description
-        if p.num_questions > 0:
-            # answer_list = p.questions
-            for i in range(0, p.num_questions):
-                q = Question.query.filter_by(id=p.questions[i].id).first()
-                q.answer_description = modified_answers[i]
-                print q.answer_description
-                db.session.merge(q)
-                db.session.autoflush()
+        # if p.num_questions > 0:
+        #     # answer_list = p.questions
+        #     for i in range(0, p.num_questions):
+        #         q = Question.query.filter_by(id=p.questions[i].id).first()
+        #         q.answer_description = modified_answers[i]
+        #         print q.answer_description
+        #         db.session.merge(q)
+        #         db.session.autoflush()
         db.session.merge(p)
         db.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
