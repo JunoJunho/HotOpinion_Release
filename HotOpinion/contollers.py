@@ -175,7 +175,7 @@ def modify_poll_title():
             # answer_list = p.questions
             for i in range(0, p.num_questions):
                 p.questions[i].answer_description = modified_answers[i]
-        db.session.add(p)
+        db.session.merge(p)
         db.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
