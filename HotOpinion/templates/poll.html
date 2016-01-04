@@ -340,7 +340,7 @@
                 answer_div.find(".list-group.answer").append(li_str);
             }
             current_vote_description = "<" + poll_title + "> " + poll_desc;
-            if(current_vote_description.length() > 100){
+            if(current_vote_description.length > 100){
                 current_vote_description = current_vote_description.substring(0, 99);
             }
         }
