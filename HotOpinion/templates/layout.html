@@ -82,23 +82,23 @@
         <footer>
             <p>&copy; HotOpinion <div class="fb-login-button" scope="public_profile,email" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState()"></div>
             <div class="fb-share-button" data-href="http://hotopinion.net" data-layout="button_count"></div></p>
-            <a class="btn btn-primary btn-lg" href="javascript:fbShare()"><i class="fa fa-facebook fa-lg"></i> Share on Facebook</a>
+
         </footer>
     </div>
     <script type="text/javascript">
         function fbShare() {
-        var product_name   = 	'Hot Opinion';
-	var description	   =	'Hot opinion, Hot subject';
-	var share_url	   =	'http://hotopinion.net';
-    FB.ui({
-        method: 'feed',
-        name: product_name,
-        link: share_url,
-        description: description
+            var product_name = 'Hot Opinion';
+            var description = current_vote_description;
+            var share_url = 'http://hotopinion.net';
+            FB.ui({
+                method: 'feed',
+                name: product_name,
+                link: share_url,
+                description: description
 
-    }, function(response) {
-    });
-    }
+            }, function (response) {});
+            current_vote_description = "Hot Opinion, Hot Subject";
+        }
     </script>
 
     <script src="/static/scripts/jquery-1.10.2.js"></script>

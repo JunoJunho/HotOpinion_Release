@@ -12,7 +12,7 @@
                 </div>
                 <div class="modal-body">
                     <p>정상적으로 투표되었습니다.</p>
-
+                    <a class="btn btn-primary btn-lg" href="javascript:fbShare()"><i class="fa fa-facebook fa-lg"></i> Share on Facebook</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -104,6 +104,7 @@
         var cur_comment_total_page = -1;
         var submitted_comment = "";
         var _clone_panel;
+        var current_vote_description = "Hot Opinion, Hot Subject";
 
         $(document).ready(function(){
             var csrftoken = $('meta[name=csrf-token]').attr('content');
@@ -328,6 +329,8 @@
 
         function update_poll_answers(poll_id, json_data){
             var poll = json_data.objects[0];
+            var poll_title = poll.subject;
+            var poll_desc = poll.question_statement;
             var total_participant = poll.total_participant;
             var answer_list = poll.questions;
             var answer_div = $("div.panel-collapse.in");
@@ -335,6 +338,10 @@
             for (var i=0; i<answer_list.length; i++){
                 var li_str = "<a href=\"#\" class=\"list-group-item\" onclick=\"return vote_poll_handler(" + poll_id +"," + answer_list[i].id +")\">" + (i+1).toString() + ". " + answer_list[i].answer_description + " <b>(" + answer_list[i].selected_num + "/" + total_participant +")</b>" + "</a>";
                 answer_div.find(".list-group.answer").append(li_str);
+            }
+            current_vote_description = "<" + poll_title + "> " + poll_desc;
+            if(current_vote_description.length() > 100){
+                current_vote_description = current_vote_description.substring(0, 99);
             }
         }
 
