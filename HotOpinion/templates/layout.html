@@ -4,11 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta property="og:url"                content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
-    <meta property="og:type"               content="article" />
-    <meta property="og:title"              content="When Great Minds Don’t Think Alike" />
-    <meta property="og:description"        content="How much does culture influence creative thinking?" />
-    <meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
     <title>{{ title }}</title>
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
@@ -87,10 +82,17 @@
     </div>
     <script type="text/javascript">
         function fbShare() {
-        FB.ui({
-          method: 'share',
-          href: 'http://hotopinion.net'
-        }, function(response){});
+        var product_name   = 	'Hot Opinion';
+	var description	   =	'Hot opinion, Hot subject';
+	var share_url	   =	'http://hotopinion.net';
+    FB.ui({
+        method: 'feed',
+        name: product_name,
+        link: share_url,
+        description: description
+
+    }, function(response) {
+    });
     }
     </script>
 
