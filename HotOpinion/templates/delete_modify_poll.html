@@ -161,7 +161,7 @@
         var num_questions = answer_obj.length;
         for(var i=0; i<num_questions; i++){
             var answer_id = (i+1).toString();
-            var li_str = "<a href=\"#\" class=\"list-group-item\" onclick=\"\">" + answer_id + ". " + answer_obj[i].answer_description+"</a>";
+            var li_str = "<a href=\"#\" class=\"list-group-item\" id=\"panel_answer_poll_"+poll_id+"\"onclick=\"\">" + answer_id + ". " + answer_obj[i].answer_description+"</a>";
             div_item.find(".list-group").append(li_str);
         }
     }
