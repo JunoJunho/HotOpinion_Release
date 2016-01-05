@@ -207,11 +207,6 @@
                 var user_name = "{{ session.user_name }}";
                 $("#comment_input"+poll_id).val(""); // User name here
                 var comment_html = "<li class='list-group-item'>"+ request_string + " - " + str_date + " / " + user_name + "</li>";
-                {% if 'is_superuser' in session %}
-                    {% if session.is_superuser %}
-                         comment_html = "<li class='list-group-item'>"+"<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" style=\"float:right;cursor: pointer\" onclick=\"return launch_comment_delete_modal("+comment_id+")\" ></span>"+ request_string + " - " + str_date + " / " + user_name + "</li>";
-                    {% endif %}
-                {% endif %}
                 $("#comment_ul"+poll_id).prepend(comment_html);
             {% else %}
                 $("#loginModal").modal('show');
