@@ -233,6 +233,7 @@
             for( var i = 0; i<num_of_results; i++){
                 var str_date = json_data.objects[i].comment_time;
                 var poll_id = json_data.objects[i].poll_id;
+                var comment_id = json_data.objects[i].id;
                 var comment_content = json_data.objects[i].comment_content;
                 comment_content = decodeHtml(comment_content);
                 str_date = str_date.replace(/-/g,'\.');
@@ -242,7 +243,7 @@
                 var comment_html = "<li class=\"list-group-item\">"+ comment_content + " - " + str_date + " / " + json_data.objects[i].user_name + "</li>";
                 {% if session.logged_in %}
                     {% if session.is_superuser %}
-                        var delete_icon = "<li class=\"list-group-item\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" style=\"float:right;cursor: pointer\" onclick=\"\" ></span>" + comment_content + " - " + str_date + " / " + json_data.objects[i].user_name + "</li>";
+                        var delete_icon = "<li class=\"list-group-item\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" style=\"float:right;cursor: pointer\" onclick=\"return launch_delete_modal("+comment_id+")\" ></span>" + comment_content + " - " + str_date + " / " + json_data.objects[i].user_name + "</li>";
                         comment_html = delete_icon;
                     {% endif %}
                 {% endif %}
@@ -463,6 +464,33 @@
                     dataType: "json",
                     contentType: "application/json"
            });
+        }
+
+        function delete_comment(comment_id){
+            {% if session.is_superuser %}
+                $.ajax({
+                    url: '/delete_comment',
+                    type: 'POST',
+                    data: JSON.stringify({
+                        comment_id : comment_id
+                    }),
+                    success: function (response) {
+                        alert("삭제되었습니다.");
+                        location.reload();
+                    },
+                    error: errorHandler,
+                    dataType: "json",
+                    contentType: "application/json"
+                });
+            {% else %}
+            {% endif %}
+        }
+
+        function launch_comment_delete_modal(comment_id){
+{#            $("#commentDeleteModal")#}
+            $("#commentDeleteModal").find("#delete_btn").click(function(){
+                alert(comment_id);
+            });
         }
 
 
