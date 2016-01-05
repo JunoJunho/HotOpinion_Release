@@ -123,7 +123,8 @@ def vote_poll():
         db.session.commit()
         u = User.query.filter_by(name_string=session['user_email']).first()
         p = Poll.query.get(poll_id)
-        u.attended_polls.append(p)
+        if p not in u.attended_polls:
+            u.attended_polls.append(p)
         User.query.session.commit()
         return json.dumps({'success': True, 'poll_id': p.id}), 200, {'ContentType': 'application/json'}
 
