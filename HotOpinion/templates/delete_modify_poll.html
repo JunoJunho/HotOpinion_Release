@@ -167,7 +167,7 @@
     }
 
     function delete_poll(poll_id){
-        $("#pollDeleteModal".modal('hide');
+        $("#pollDeleteModal").modal('hide');
         var _poll_id = poll_id*1;
         $.ajax({
                 url: '/delete_poll',
