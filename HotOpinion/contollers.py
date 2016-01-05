@@ -228,6 +228,7 @@ def delete_poll():
             print user_list
             for each in user_list:
                 each.attended_polls.remove(p)
+                User.query.session.commit()
             db.session.commit()
             print "Loop exit"
             # 4. Poll delete
