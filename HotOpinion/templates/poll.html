@@ -208,12 +208,12 @@
                 $("#comment_input"+poll_id).val(""); // User name here
                 $("#comment_ul"+poll_id).prepend("<li class='list-group-item'>"+ request_string + " - " + str_date + " / " + user_name + "</li>");
             {% else %}
-                 $("#loginModal").modal('show');
-                 checkLoginState();
-                {% else %}
-                    $("#loginModal").modal('show');
-                    checkLoginState();
-                {% endif %}
+                $("#loginModal").modal('show');
+                checkLoginState();
+            {% endif %}
+            {% else %}
+                $("#loginModal").modal('show');
+                checkLoginState();
             {% endif %}
         }
 
