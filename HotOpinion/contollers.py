@@ -299,6 +299,7 @@ def init_setting():
 @app.route('/delete_comment', methods=['POST'])
 def delete_comment():
     if request.method == 'POST':
+        print("Delete comment entry")
         if not session['is_superuser']:
             print("Not super_user")
             return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
