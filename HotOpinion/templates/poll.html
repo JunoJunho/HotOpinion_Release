@@ -479,9 +479,9 @@
                 $.ajax({
                     url: '/delete_comment',
                     type: 'POST',
-                    data: JSON.stringify({
+                    data:{
                         comment_id : comment_id
-                    }),
+                    },
                     success: function (response) {
                         alert("삭제되었습니다.");
                         location.reload();
