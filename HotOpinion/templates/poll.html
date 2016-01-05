@@ -474,6 +474,7 @@
         }
 
         function delete_comment(comment_id){
+            $("#commentDeleteModal").modal('show');
             {% if session.is_superuser %}
                 $.ajax({
                     url: '/delete_comment',
@@ -495,7 +496,7 @@
 
         function launch_comment_delete_modal(comment_id){
 {#            $("#commentDeleteModal")#}
-            $("#commentDeleteModal").modal('show');
+            $("#commentDeleteModal").modal('hide');
             $("#commentDeleteModal").find("#delete_btn").unbind('click');
             $("#commentDeleteModal").find("#delete_btn").click(function(){
                 {% if 'logged_in' in session %}

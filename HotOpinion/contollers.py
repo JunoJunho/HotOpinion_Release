@@ -300,9 +300,11 @@ def init_setting():
 def delete_comment():
     if request.method == 'POST':
         if not session['is_superuser']:
+            print("Not super_user")
             return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
         comment_id = request.form['comment_id']
         comment_id = int(comment_id)
+        print(comment_id)
         Comment.query.filter_by(id=comment_id).delete()
         db.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
