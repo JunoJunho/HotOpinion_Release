@@ -303,6 +303,7 @@ def delete_comment():
         if not session['is_superuser']:
             print("Not super_user")
             return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
+        print("Try to get comment id")
         comment_id = request.form['comment_id']
         print("GET from request")
         comment_id = int(comment_id)
