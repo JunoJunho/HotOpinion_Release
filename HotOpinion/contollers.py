@@ -222,14 +222,16 @@ def delete_poll():
             # 3. respondents_identifier delete
             p = Poll.query.filter_by(id=poll_id).first()
             print p.User
-            user_list = []
+            # user_list = []
             for each_user in p.User:
-                user_list.append(each_user)
-            print user_list
-            for each in user_list:
-                each.attended_polls.remove(p)
-                User.query.session.commit()
+                each_user.attended_polls.remove(p)
             db.session.commit()
+            #     user_list.append(each_user)
+            # print user_list
+            # for each in user_list:
+            #     each.attended_polls.remove(p)
+            #     User.query.session.commit()
+            # db.session.commit()
             print "Loop exit"
             # 4. Poll delete
             Poll.query.filter_by(id=poll_id).delete()
