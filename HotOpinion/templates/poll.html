@@ -474,7 +474,6 @@
         }
 
         function delete_comment(comment_id){
-
             $("#commentDeleteModal").modal('hide');
             {% if session.is_superuser %}
                 $.ajax({
