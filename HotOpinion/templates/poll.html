@@ -171,6 +171,7 @@
 
         function add_comment(poll_id){
             if(!$("#comment_input"+poll_id).val()) return false;
+            {% if 'logged_in' in session %}
             {% if session.logged_in %}
                 submitted_comment = $("#comment_input"+poll_id.toString()).val();
                 submitted_comment = safe_tags_replace(submitted_comment);
@@ -209,6 +210,10 @@
             {% else %}
                  $("#loginModal").modal('show');
                  checkLoginState();
+                {% else %}
+                    $("#loginModal").modal('show');
+                    checkLoginState();
+                {% endif %}
             {% endif %}
         }
 
@@ -241,11 +246,13 @@
                 str_date = str_date.replace(/:/g, '\.');
                 console.log(json_data);
                 var comment_html = "<li class=\"list-group-item\">"+ comment_content + " - " + str_date + " / " + json_data.objects[i].user_name + "</li>";
+                {% if 'logged_in' in session %}
                 {% if session.logged_in %}
                     {% if session.is_superuser %}
                         var delete_icon = "<li class=\"list-group-item\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" style=\"float:right;cursor: pointer\" onclick=\"return launch_comment_delete_modal("+comment_id+")\" ></span>" + comment_content + " - " + str_date + " / " + json_data.objects[i].user_name + "</li>";
                         comment_html = delete_icon;
                     {% endif %}
+                {% endif %}
                 {% endif %}
                 $("#comment_ul"+poll_id).append(comment_html);
                 // Add User name information here
@@ -491,7 +498,13 @@
             $("#commentDeleteModal").modal('show');
             $("#commentDeleteModal").find("#delete_btn").unbind('click');
             $("#commentDeleteModal").find("#delete_btn").click(function(){
-                alert(comment_id);
+                {% if 'logged_in' in session %}
+                {% if session.logged_in %}
+                {% if session.is_superuser %}
+                    delete_comment(comment_id);
+                {% endif %}
+                {% endif %}
+                {% endif %}
             });
         }
 

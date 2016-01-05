@@ -294,3 +294,15 @@ def init_setting():
     if 'user_email' in session:
         session.pop('user_email', None)
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+
+@app.route('/delete_comment', methods=['POST'])
+def delete_comment():
+    if request.method == 'POST':
+        if not session['is_superuser']:
+            return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
+        comment_id = request.form['comment_id']
+        comment_id = int(comment_id)
+        Comment.query.filter_by(id=comment_id).delete()
+        db.session.commit()
+        return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
