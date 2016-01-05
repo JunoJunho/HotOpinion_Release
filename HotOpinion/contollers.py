@@ -309,5 +309,5 @@ def delete_comment():
         comment_id = int(comment_id)
         print(comment_id)
         Comment.query.filter_by(id=comment_id).delete()
-        db.session.commit()
+        Comment.query.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
