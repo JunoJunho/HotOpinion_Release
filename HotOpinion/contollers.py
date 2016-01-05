@@ -304,6 +304,7 @@ def delete_comment():
             print("Not super_user")
             return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
         comment_id = request.form['comment_id']
+        print("GET from request")
         comment_id = int(comment_id)
         print(comment_id)
         Comment.query.filter_by(id=comment_id).delete()
