@@ -167,6 +167,7 @@
     }
 
     function delete_poll(poll_id){
+        $("#pollDeleteModal".modal('hide');
         var _poll_id = poll_id*1;
         $.ajax({
                 url: '/delete_poll',
@@ -175,6 +176,7 @@
                     poll_id : _poll_id
                 },
                 success: function(){
+                    alert("삭제되었습니다.");
                     location.reload();
                 },
                 error: function(error){

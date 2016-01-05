@@ -66,9 +66,9 @@
     <script type="text/javascript">
         function launch_poll_delete_modal(poll_id){
 {#            $("#commentDeleteModal")#}
-            $("#commentDeleteModal").modal('show');
-            $("#commentDeleteModal").find("#delete_btn").unbind('click');
-            $("#commentDeleteModal").find("#delete_btn").click(function(){
+            $("#pollDeleteModal").modal('show');
+            $("#pollDeleteModal").find("#delete_btn").unbind('click');
+            $("#pollDeleteModal").find("#delete_btn").click(function(){
                 {% if 'logged_in' in session %}
                 {% if session.logged_in %}
                 {% if session.is_superuser %}
