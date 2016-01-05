@@ -242,8 +242,8 @@
                 var comment_html = "<li class=\"list-group-item\">"+ comment_content + " - " + str_date + " / " + json_data.objects[i].user_name + "</li>";
                 {% if session.logged_in %}
                     {% if session.is_superuser %}
-                        var delete_icon = "<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" style=\"float:right;cursor: pointer\" onclick=\"#)\" ></span>";
-                        comment_html = delete_icon + comment_html;
+                        var delete_icon = "<li class=\"list-group-item\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" style=\"float:right;cursor: pointer\" onclick=\"#)\" ></span>" + comment_content + " - " + str_date + " / " + json_data.objects[i].user_name + "</li>";
+                        comment_html = delete_icon;
                     {% endif %}
                 {% endif %}
                 $("#comment_ul"+poll_id).append(comment_html);
