@@ -318,7 +318,7 @@
             var num_questions = answer_obj.length;
             for(var i=0; i<num_questions; i++){
                 var answer_id = (i+1).toString();
-                var li_str = "<a href=\"#\" class=\"list-group-item\" onclick=\"return vote_poll_handler(" + poll_id +"," + answer_obj[i].id +")\">" + answer_id + ". " + answer_obj[i].answer_description + " (" + answer_obj[i].selected_num + "/" + total_participants +")" + "</a>";
+                var li_str = "<a href=\"#\" class=\"list-group-item\" onclick=\"return vote_poll_handler(" + poll_id +"," + answer_obj[i].id +")\">" + answer_id + ". " + answer_obj[i].answer_description + " <b>(" + answer_obj[i].selected_num + "/" + total_participants +")</b>" + "</a>";
                 div_item.find("#answer_ul").append(li_str);
             }
         }

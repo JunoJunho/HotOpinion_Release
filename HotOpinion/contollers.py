@@ -22,10 +22,10 @@ def shutdown_session(exception=None):
 @app.route('/')
 def index(page=1):
     total = db.session.query(Poll).count()
-    pn = Poll.query.paginate(page=page,
-                             per_page=app.config['POSTS_PER_PAGE'],
-                             error_out=False
-                             )
+    pn = Poll.query.order_by(Poll.id.desc()).paginate(page=page,
+                                                      per_page=app.config['POSTS_PER_PAGE'],
+                                                      error_out=False
+                                                      )
     return render_template(
         'poll.html',
         title='Hot Opinion',
@@ -52,10 +52,10 @@ def admin():
         )
     else:
         total = db.session.query(Poll).count()
-        pn = Poll.query.paginate(page=1,
-                                 per_page=app.config['POSTS_PER_PAGE'],
-                                 error_out=False
-                                 )
+        pn = Poll.query.order_by(Poll.id.desc()).paginate(page=1,
+                                                          per_page=app.config['POSTS_PER_PAGE'],
+                                                          error_out=False
+                                                          )
         return render_template(
             'poll.html',
             title='Hot Opinion',
@@ -68,10 +68,10 @@ def admin():
 
 @app.route('/poll_more/<int:page>', methods=['GET', 'POST'])
 def more_polls(page):
-    pn = Poll.query.paginate(page=page,
-                             per_page=app.config['POSTS_PER_PAGE'],
-                             error_out=False
-                             )
+    pn = Poll.query.order_by(Poll.id.desc()).paginate(page=page,
+                                                      per_page=app.config['POSTS_PER_PAGE'],
+                                                      error_out=False
+                                                      )
     return jsonify(pn)
 
 
@@ -149,10 +149,10 @@ def modify_delete_poll():
         return redirect(url_for(index))
     total = db.session.query(Poll).count()
     db.session.close()
-    pn = Poll.query.paginate(page=1,
-                             per_page=app.config['POSTS_PER_PAGE'],
-                             error_out=False
-                             )
+    pn = Poll.query.order_by(Poll.id.desc()).paginate(page=1,
+                                                      per_page=app.config['POSTS_PER_PAGE'],
+                                                      error_out=False
+                                                      )
     return render_template('delete_modify_poll.html',
                            num_of_pages_per_pagination=app.config['POSTS_PER_PAGE'],
                            total=total,
