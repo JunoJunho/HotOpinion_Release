@@ -69,11 +69,9 @@
             $("#pollDeleteModal").modal('show');
             $("#pollDeleteModal").find("#delete_btn").unbind('click');
             $("#pollDeleteModal").find("#delete_btn").click(function(){
-                {% if 'logged_in' in session %}
-                {% if session.logged_in %}
+                {% if 'is_superuser' in session %}
                 {% if session.is_superuser %}
                     delete_poll(poll_id);
-                {% endif %}
                 {% endif %}
                 {% endif %}
             });
