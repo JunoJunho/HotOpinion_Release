@@ -2,78 +2,78 @@
 
 {% block content %}
 
-    <div id="myModal" class="modal fade modal-sm" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Info</h4>
-                </div>
-                <div class="modal-body">
-                    <p>작업 도중 문제가 발생하였습니다. 나중에 다시 시도 하여 주세요.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+<div id="myModal" class="modal fade modal-sm" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+                <p>작업 도중 문제가 발생하였습니다. 나중에 다시 시도 하여 주세요.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div id="modify_poll" class="modal fade bs-example-modal-sm" role="dialog">
-        <div class="modal-content modal-sm">
-            <div class="modal-header modal-sm">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">수정하기</h4>
-            </div>
-            <div class="modal-body modal-sm">
-                <label for="modal_poll_contents">설문 제목</label>
-                <input name= "modal_poll_contents" type="text" class="form-control" id="modal_poll_contents" style="margin-bottom: 2px">
-                <label for="modal_poll_description">설문 내용</label>
-                <textarea name="modal_poll_description" class="form-control" id="modal_poll_description" rows="3"></textarea>
-                <input type="text" class="form-control" id="modal_poll_answer1" style="margin-bottom: 2px">
-                <input type="text" class="form-control" id="modal_poll_answer2" style="margin-bottom: 2px">
-                <input type="text" class="form-control" id="modal_poll_answer3" style="margin-bottom: 2px">
-                <input type="text" class="form-control" id="modal_poll_answer4" style="margin-bottom: 2px">
-                <input type="text" class="form-control" id="modal_poll_answer5" style="margin-bottom: 2px">
-            </div>
-            <div class="modal-footer modal-sm">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="handle_modify_poll_name()">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+<div id="modify_poll" class="modal fade bs-example-modal-sm" role="dialog">
+    <div class="modal-content modal-sm">
+        <div class="modal-header modal-sm">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">수정하기</h4>
+        </div>
+        <div class="modal-body modal-sm">
+            <label for="modal_poll_contents">설문 제목</label>
+            <input name= "modal_poll_contents" type="text" class="form-control" id="modal_poll_contents" style="margin-bottom: 2px">
+            <label for="modal_poll_description">설문 내용</label>
+            <textarea name="modal_poll_description" class="form-control" id="modal_poll_description" rows="3"></textarea>
+            <input type="text" class="form-control" id="modal_poll_answer1" style="margin-bottom: 2px">
+            <input type="text" class="form-control" id="modal_poll_answer2" style="margin-bottom: 2px">
+            <input type="text" class="form-control" id="modal_poll_answer3" style="margin-bottom: 2px">
+            <input type="text" class="form-control" id="modal_poll_answer4" style="margin-bottom: 2px">
+            <input type="text" class="form-control" id="modal_poll_answer5" style="margin-bottom: 2px">
+        </div>
+        <div class="modal-footer modal-sm">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="handle_modify_poll_name()">Save changes</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
 
-    <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="false">
-        {% for poll in paginate.items %}
-            {% autoescape false %}
-            <div class="panel panel-default" id="collapse_top_div">
-                <div class="panel-heading" role="tab" id={{ "heading_poll" + poll.id|string() }}>
-                    <h4 class="panel-title">
-                        <a class="collapsed" id={{ "panel_poll_title_" + poll.id|string() }} role="button" data-toggle="collapse" data-parent="#accordion" href= {{ "#collapse_poll" + poll.id|string() }} aria-expanded="false" aria-controls={{ "collapse_poll" + poll.id|string() }}>
-                            {{ poll.subject}}
-                        </a>
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true" style="float:right;cursor: pointer" onclick="return launch_poll_delete_modal({{ poll.id|string() }})" ></span>
-                        <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true" style="float:right;margin-right: 2px;cursor: pointer" onclick="return modify_poll_name({{ poll.id|string() }})"></span>
-                    </h4>
-                </div>
-                <div id= {{ "collapse_poll" + poll.id|string() }} class="panel-collapse collapse" role="tabpanel" aria-labelledby={{ "heading_poll" + poll.id|string() }}>
-                    <div class="panel-body" id={{ "panel_body_poll_" + poll.id|string() }}>
-                        {{ poll.question_statement}}
-                    </div>
-                    <ul class="list-group">
-                        {% for answer in poll.questions %}
-                                <a href="#" class="list-group-item" id={{ "panel_answer_poll_" + poll.id|string() +"_"+ answer.choice_num|string() }} onclick="">{{ answer.choice_num }}. {{ answer.answer_description }}</a>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            {% endautoescape %}
-        {% endfor %}
+<div class="panel-group " id="accordion" role="tablist" aria-multiselectable="false">
+    {% for poll in paginate.items %}
+    {% autoescape false %}
+    <div class="panel panel-default" id="collapse_top_div">
+        <div class="panel-heading" role="tab" id={{ "heading_poll" + poll.id|string() }}>
+            <h4 class="panel-title">
+                <a class="collapsed" id={{ "panel_poll_title_" + poll.id|string() }} role="button" data-toggle="collapse" data-parent="#accordion" href= {{ "#collapse_poll" + poll.id|string() }} aria-expanded="false" aria-controls={{ "collapse_poll" + poll.id|string() }}>
+                    {{ poll.subject}}
+                </a>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" style="float:right;cursor: pointer" onclick="return launch_poll_delete_modal({{ poll.id|string() }})" ></span>
+                <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true" style="float:right;margin-right: 2px;cursor: pointer" onclick="return modify_poll_name({{ poll.id|string() }})"></span>
+            </h4>
+        </div>
+        <div id= {{ "collapse_poll" + poll.id|string() }} class="panel-collapse collapse" role="tabpanel" aria-labelledby={{ "heading_poll" + poll.id|string() }}>
+        <div class="panel-body" id={{ "panel_body_poll_" + poll.id|string() }}>
+            {{ poll.question_statement}}
+        </div>
+        <ul class="list-group">
+            {% for answer in poll.questions %}
+                <a href="#" class="list-group-item" id={{ "panel_answer_poll_" + poll.id|string() +"_"+ answer.choice_num|string() }} onclick="">{{ answer.choice_num }}. {{ answer.answer_description }}</a>
+            {% endfor %}
+        </ul>
     </div>
+</div>
+{% endautoescape %}
+{% endfor %}
+</div>
 
-    <br/>
-    <input class="btn btn-default" type="button" id="btn_load_more" value="Load More" style="display: none">
+<br/>
+<input class="btn btn-default" type="button" id="btn_load_more" value="Load More" style="display: none">
 
 
 <script type=text/javascript>
@@ -170,19 +170,19 @@
         $("#pollDeleteModal").modal('hide');
         var _poll_id = poll_id*1;
         $.ajax({
-                url: '/delete_poll',
-                type: 'POST',
-                data: {
-                    poll_id : _poll_id
-                },
-                success: function(){
-                    alert("삭제되었습니다.");
-                    location.reload();
-                },
-                error: function(error){
-                    console.log(error);
-                    $("#myModal").modal('show');
-                }
+            url: '/delete_poll',
+            type: 'POST',
+            data: {
+                poll_id : _poll_id
+            },
+            success: function(){
+                alert("삭제되었습니다.");
+                location.reload();
+            },
+            error: function(error){
+                console.log(error);
+                $("#myModal").modal('show');
+            }
         });
     }
 
@@ -226,9 +226,7 @@
         });
 
         var contents = $("#panel_poll_title_" + poll_id).text();
-{#        contents = safe_tags_replace(contents);#}
         var description = $("#panel_body_poll_" + poll_id).text();
-{#        description = safe_tags_replace(description);#}
         $("#modify_poll").find("#modal_poll_contents").val(contents.trim());
         $("#modify_poll").find("#modal_poll_description").val(description.trim());
         $("#modify_poll").val(poll_id);
@@ -253,48 +251,41 @@
             modified_answers.push(_modified_answer_contents);
         }
         $.ajax({
-                url: '/modify_poll',
-                type: 'POST',
-                data: {
-                    poll_id : poll_id,
-                    modified_title: modified_contents,
-                    modified_description: modified_description,
-{#                    modified_answers: JSON.stringify(modified_answers)#}
-{#                    modified_answers: modified_answers#}
-                },
-                success: function(){
-{#                    location.reload();#}
-                },
-                error: function(error){
-                    console.log(error);
-                    $("#myModal").modal('show');
-                }
+            url: '/modify_poll',
+            type: 'POST',
+            data: {
+                poll_id : poll_id,
+                modified_title: modified_contents,
+                modified_description: modified_description,
+            },
+            success: function(){
+            },
+            error: function(error){
+                console.log(error);
+                $("#myModal").modal('show');
+            }
         });
 
         $.ajax({
-                url: '/modify_questions',
-                type: 'POST',
-                data: {
-                    poll_id : poll_id,
-{#                    modified_title: modified_contents,#}
-{#                    modified_description: modified_description,#}
-{#                    modified_answers: JSON.stringify(modified_answers)#}
-                    modified_answers: modified_answers
-                },
-                success: function(){
-                    location.reload();
-                },
-                error: function(error){
-                    console.log(error);
-                    $("#myModal").modal('show');
-                }
+            url: '/modify_questions',
+            type: 'POST',
+            data: {
+                poll_id : poll_id,
+                modified_answers: modified_answers
+            },
+            success: function(){
+                location.reload();
+            },
+            error: function(error){
+                console.log(error);
+                $("#myModal").modal('show');
+            }
         });
-        console.log($("#modal_poll_contents").val());
     }
 
     function errorHandler(error){
-            console.log(error);
-            $("#myModal").modal('show');
+        console.log(error);
+        $("#myModal").modal('show');
     }
 
 </script>
