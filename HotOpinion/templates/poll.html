@@ -142,17 +142,18 @@
                     xfbml      : true,
                     version    : 'v2.5'
                 });
-                var session_logged_in = false;
                 FB.getLoginStatus(function(response){
                     if (response.status != 'connected') { // Not log in in the facebook
                         initialize_setting();
                     }else{ // Login face book, but check the flask app is login
-                        {% if 'logged_in' in session %}
-                            session_logged_in = {{ session.logged_in }};
+                        {% if 'user_email' not in session %}
+                            // If there is no user_email in session, it is not loggined to the flask app
+                            statusChangeCallback(response);
                         {% endif %}
-                        if(!session_logged_in){
-                            FB.logout(function(response){logout_handler(); location.reload();});
-                        }
+                    // else case is loggined, and revisit this site.
+{#                        if(!session_logged_in){#}
+{#                            FB.logout(function(response){logout_handler(); location.reload();});#}
+{#                        }#}
                     }
                 });
 				FB.Event.subscribe("auth.logout", function(){logout_handler(); location.reload();});
@@ -171,8 +172,7 @@
 
         function add_comment(poll_id){
             if(!$("#comment_input"+poll_id).val()) return false;
-            {% if 'logged_in' in session %}
-            {% if session.logged_in %}
+            {% if 'user_email' in session %}
                 submitted_comment = $("#comment_input"+poll_id.toString()).val();
                 submitted_comment = safe_tags_replace(submitted_comment);
                 $.ajax({
@@ -208,10 +208,6 @@
                 $("#comment_input"+poll_id).val(""); // User name here
                 var comment_html = "<li class='list-group-item'>"+ request_string + " - " + str_date + " / " + user_name + "</li>";
                 $("#comment_ul"+poll_id).prepend(comment_html);
-            {% else %}
-                $("#loginModal").modal('show');
-                checkLoginState();
-            {% endif %}
             {% else %}
                 $("#loginModal").modal('show');
                 checkLoginState();
@@ -395,7 +391,7 @@
             });
         }
 
-        function checkLoginState() {
+        function checkLoginState() { // From Facebook login button
             console.log("Check login state");
             FB.getLoginStatus(function(response) {
               statusChangeCallback(response);
@@ -435,7 +431,7 @@
         }
 
         function vote_poll_handler(poll_id, choice_id){
-            {% if not session.logged_in %}
+            {% if 'user_email' not in session %}
                 $("#loginModal").modal('show');
                 checkLoginState();
             {% else %}
@@ -498,11 +494,9 @@
             $("#commentDeleteModal").modal('show');
             $("#commentDeleteModal").find("#delete_btn").unbind('click');
             $("#commentDeleteModal").find("#delete_btn").click(function(){
-                {% if 'logged_in' in session %}
-                {% if session.logged_in %}
+                {% if 'is_superuser' in session %}
                 {% if session.is_superuser %}
                     delete_comment(comment_id);
-                {% endif %}
                 {% endif %}
                 {% endif %}
             });
