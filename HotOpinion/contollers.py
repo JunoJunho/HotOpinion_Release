@@ -199,7 +199,7 @@ def delete_poll():
         poll_id = request.form['poll_id']
         poll_id = int(poll_id)
         if Poll.query.filter_by(id=poll_id).first() is None:
-            print("DEBUG: poll does not exist")
+            # print("DEBUG: poll does not exist")
             json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
         # 1. Comment delete
         try:
@@ -236,13 +236,15 @@ def login_process():
         print("POST process is called")
         if 'is_superuser' in session:
             session.pop('is_superuser', None)
-        if 'logged_in' in session and session['logged_in']:
+        if 'user_email' in session and session['user_email']:
             print("Already Logon")
             print(session['user_email'])
             return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
         json_data = request.get_json(force=True)
         user_email = json_data['user_email']
         user_name = json_data['user_name']
+
+        # User check, if no user, add to database
         u = User.query.filter_by(name_string=user_email).first()
         if u is None:
             # No user exist. Add to Data base
@@ -251,16 +253,18 @@ def login_process():
                      )
             db.session.add(u)
             db.session.commit()
+
         session['user_name'] = user_name
         session['user_email'] = user_email
-        session['logged_in'] = True
+        # session['logged_in'] = True
+
         if u.name_string in app.config['SUPER_USER_EMAIL']:
             print("Super user")
             session['is_superuser'] = True
         else:
             print("Not super user")
             session['is_superuser'] = False
-        print("Return Login_Process")
+        # print("Return Login_Process")
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
@@ -279,8 +283,8 @@ def init_setting():
         session.pop('is_superuser', None)
     if 'user_name' in session:
         session.pop('user_name', None)
-    if 'logged_in' in session:
-        session['logged_in'] = False
+    # if 'logged_in' in session:
+    #     session['logged_in'] = False
     if 'user_email' in session:
         session.pop('user_email', None)
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
@@ -293,11 +297,8 @@ def delete_comment():
         if not session['is_superuser']:
             print("Not super_user")
             return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
-        print("Try to get comment id")
         comment_id = request.form['comment_id']
-        print("GET from request")
         comment_id = int(comment_id)
-        print(comment_id)
         Comment.query.filter_by(id=comment_id).delete()
         Comment.query.session.commit()
         return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
