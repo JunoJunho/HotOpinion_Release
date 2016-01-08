@@ -100,15 +100,13 @@
 
 
             <div class="navbar-collapse collapse">
-
                 <ul class="nav navbar-nav">
-                    {% if session.logged_in %}
+                {% if 'is_superuser' in session %}
                     {% if session.is_superuser %}
-                    <li><a href="{{ url_for('admin') }}">관리자 페이지</a></li>
+                        <li><a href="{{ url_for('admin') }}">관리자 페이지</a></li>
                     {% endif %}
-                    {% endif %}
+                {% endif %}
                 </ul>
-
             </div>
         </div>
     </div>
