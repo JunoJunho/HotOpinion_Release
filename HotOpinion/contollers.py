@@ -106,7 +106,11 @@ def vote_poll():
         poll_id = json_data['poll_id']
         choice_id = json_data['choice_id']
 
+        if 'user_email' not in session:
+            # Not logged in
+            return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
         user_email = session['user_email']
+
         u = User.query.filter_by(name_string=user_email).first()
         for each in u.attended_polls:
             if each.id == poll_id:
@@ -132,6 +136,9 @@ def vote_poll():
 @app.route('/add_comment', methods=['POST'])
 def add_comment():
     if request.method == 'POST':
+        if 'user_email' not in session:
+            return json.dumps({'success': False}), 200, {'ContentType': 'application/json'}
+
         json_data = request.get_json(force=True)
         poll_id = json_data['poll_id']
         comment = json_data['comment_contents']
@@ -231,7 +238,6 @@ def delete_poll():
 
 @app.route('/login_update', methods=['POST'])
 def login_process():
-    print("Login process is called")
     if request.method == 'POST':
         print("POST process is called")
         if 'is_superuser' in session:
@@ -270,7 +276,6 @@ def login_process():
 
 @app.route('/logout_update', methods=['POST'])
 def logout_process():
-    print("Logout Process")
     if request.method == 'POST':
         session.clear()
         print("Successfully Log out")
