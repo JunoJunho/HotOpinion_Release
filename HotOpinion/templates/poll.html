@@ -461,6 +461,7 @@
                     type: 'POST',
                     success: function(response){
                         console.log("Logout successfuly on server");
+                        location.reload();
                     },
                     error: errorHandler,
                     dataType: "json",
