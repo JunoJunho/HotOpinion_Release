@@ -437,6 +437,7 @@
                 $("#pollModal").find("#poll_btn").unbind('click');
                 $("#pollModal").find("#poll_btn").click(function(){
                     vote_poll(poll_id, choice_id);
+                    $("#pollModal").modal('hide');
                 });
             {% endif %}
         }
