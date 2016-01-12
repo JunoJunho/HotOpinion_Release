@@ -433,7 +433,11 @@
                 $("#loginModal").modal('show');
                 checkLoginState();
             {% else %}
-                vote_poll(poll_id, choice_id);
+                $("#pollModal").modal('show');
+                $("#pollModal").find("#poll_btn").unbind('click');
+                $("#pollModal").find("#poll_btn").click(function(){
+                    vote_poll(poll_id, choice_id);
+                });
             {% endif %}
         }
 
